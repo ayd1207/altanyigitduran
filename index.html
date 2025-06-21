@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futbolcu Transfer Uygulaması</title>
+    <!-- Tailwind CSS CDN for responsive design and utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font for better aesthetics -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen flex items-center justify-center p-4">
+    <div class="app-container bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg md:max-w-xl lg:max-w-2xl transform transition-all duration-300 hover:scale-105">
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-6">Futbolcu Transfer Analizi</h1>
+
+        <!-- Input Section -->
+        <div class="input-section mb-6 space-y-4">
+            <!-- Yaş (Age) -->
+            <div>
+                <label for="ageInput" class="block text-gray-700 text-lg font-semibold mb-2">Kaç yaşındasın?</label>
+                <input
+                    type="number"
+                    id="ageInput"
+                    min="15" max="45"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 text-lg"
+                    placeholder="Örn: 22"
+                />
+            </div>
+
+            <!-- Sürekli oynama isteği (Wants to Play) -->
+            <div>
+                <label class="block text-gray-700 text-lg font-semibold mb-2">Sürekli oynamak mı istiyorsun, yedek olmak seni rahatsız etmez mi?</label>
+                <div class="flex space-x-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="wantsToPlay" value="yes" class="form-radio h-5 w-5 text-blue-600 rounded-full">
+                        <span class="ml-2 text-gray-700">Evet</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="wantsToPlay" value="no" class="form-radio h-5 w-5 text-blue-600 rounded-full">
+                        <span class="ml-2 text-gray-700">Hayır</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Kariyer önceliği (Priority) -->
+            <div>
+                <label class="block text-gray-700 text-lg font-semibold mb-2">Hedefin para kazanmak mı yoksa kariyer başarısı mı?</label>
+                <div class="flex space-x-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="priority" value="money" class="form-radio h-5 w-5 text-blue-600 rounded-full">
+                        <span class="ml-2 text-gray-700">Para</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="priority" value="success" class="form-radio h-5 w-5 text-blue-600 rounded-full">
+                        <span class="ml-2 text-gray-700">Başarı</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Yedek oyuncu mu? (Is Reserve) -->
+            <div>
+                <label class="block text-gray-700 text-lg font-semibold mb-2">Şu an takımında yedek misin?</label>
+                <div class="flex space-x-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="isReserve" value="yes" class="form-radio h-5 w-5 text-blue-600 rounded-full">
+                        <span class="ml-2 text-gray-700">Evet</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="isReserve" value="no" class="form-radio h-5 w-5 text-blue-600 rounded-full">
+                        <span class="ml-2 text-gray-700">Hayır</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Oyuncunun seviyesi (Current Quality) - Bonus -->
+            <div>
+                <label for="currentQualitySelect" class="block text-gray-700 text-lg font-semibold mb-2">Kendini hangi seviyede görüyorsun?</label>
+                <select
+                    id="currentQualitySelect"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 text-lg"
+                >
+                    <option value="">Seviye Seçin</option>
+                    <option value="high">Yüksek</option>
+                    <option value="medium">Orta</option>
+                    <option value="low">Düşük</option>
+                </select>
+            </div>
+
+            <button
+                id="submitButton"
+                class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            >
+                Transfer Rotası Bul
+            </button>
+        </div>
+
+        <!-- Output/Response Section -->
+        <div class="output-section bg-gray-50 p-6 rounded-lg border border-gray-200 min-h-[120px] relative">
+            <h2 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">Önerilen Transfer Rotası:</h2>
+            <p id="systemResponse" class="text-gray-700 text-lg">Lütfen yukarıdaki bilgileri doldurun ve "Transfer Rotası Bul" butonuna tıklayın.</p>
+
+            <!-- Visual Feedback Area (Hidden by default) -->
+            <div id="feedbackMessage" class="absolute inset-x-0 bottom-0 bg-opacity-90 py-2 px-4 text-center rounded-b-lg hidden">
+                <p id="feedbackText" class="font-semibold"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
